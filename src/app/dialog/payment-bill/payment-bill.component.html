@@ -1,0 +1,42 @@
+<nb-card>
+    <nb-card-header>Thanh toán cho hóa đơn: {{ bookingId }}</nb-card-header>
+    <nb-card-body>
+        <form novalidate [formGroup]="form">
+            <div class="form-group row">
+                <label for="Id" class="label col-sm-3 col-form-label">Mã hóa đơn thanh toán: </label>
+                <div class="col-sm-9">
+                    <input type="text" 
+                    formControlName="id" 
+                    nbInput fullWidth id="Id"
+                    placeholder="Id"
+                    [status]="getConfig('id') ? 'danger' : 'basic'">
+                    <span class="text-danger" *ngIf="getConfig('id')">
+                        <span *ngIf="form.get('id').errors?.required">id is required</span>
+                        <span *ngIf="form.get('id').errors?.max">id is max at {{ form.get('id').errors.max.max }}</span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="typeOfPay" class="label col-sm-3 col-form-label">Mô tả: </label>
+                <nb-select
+                        formControlName="typeOfPay" 
+                        shape="semi-round" fullWidth
+                        id="typeOfPay" placeholder="Type of Payment"
+                        [status]="getConfig('typeOfPay') ? 'danger' : 'basic'">
+                        <nb-option *ngFor="let item of listTypePayment"
+                            [value] = "item.id">
+                            {{ item.name }} : {{ item.id }}
+                        </nb-option>
+                    </nb-select>
+                    <span class="text-danger" *ngIf="getConfig('typeOfPay')">
+                        <span *ngIf="form.get('typeOfPay').errors?.required">Type is required</span>
+                    </span>
+            </div>
+        </form>
+    </nb-card-body>
+    <nb-card-footer class="button-row">
+        <button nbButton status="danger" (click)="cancel()">Cancel</button>
+        <button nbButton status="success" (click)="submit()" [disabled]="!form.valid">Submit</button>
+    </nb-card-footer>
+  </nb-card>

@@ -1,0 +1,69 @@
+<nb-card>
+    <nb-card-header>
+        <span *ngIf="isService; else Menu">
+            Dịch vụ cho đơn: {{ bookingId }}
+        </span>
+        <ng-template #Menu>
+            Món ăn cho đơn : {{ bookingId }}
+        </ng-template>
+    </nb-card-header>
+    <nb-card-body>
+        <form novalidate [formGroup]="form" >
+            <div class="form-group row">
+                <label for="Id" class="label col-sm-3 col-form-label" *ngIf="isService; else addFood">Dịch vụ: </label>
+                <ng-template #addFood>
+                    <label for="Id" class="label col-sm-3 col-form-label">Món ăn: </label>
+                </ng-template>
+                <div class="col-sm-9">
+                    <nb-select
+                        formControlName="id" 
+                        shape="semi-round" fullWidth
+                        id="Id" placeholder="ID"
+                        [status]="getConfig('id') ? 'danger' : 'basic'">
+                        <nb-option *ngFor="let item of listOption"
+                            [value] = "item.id">
+                            {{ item.name }} : {{ item.id }}
+                        </nb-option>
+                    </nb-select>
+                    <span class="text-danger" *ngIf="getConfig('id')">
+                        <span *ngIf="form.get('id').errors?.required">ID is required</span>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="Amount" class="label col-sm-3 col-form-label">Số lượng: </label>
+                <div class="col-sm-9">
+                    <input type="number" 
+                    formControlName="amount" 
+                    nbInput fullWidth id="Amount"
+                    placeholder="Amount"
+                    [status]="getConfig('amount') ? 'danger' : 'basic'">
+                    <span class="text-danger" *ngIf="getConfig('amount')">
+                        <span *ngIf="form.get('amount').errors?.required">Amount is required</span>
+                        <span *ngIf="form.get('amount').errors?.min">amount is min at {{ form.get('amount').errors.min.min }}</span>
+                        <span *ngIf="form.get('amount').errors?.max">amount is max at {{ form.get('amount').errors.max.max }}</span>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="Price" class="label col-sm-3 col-form-label">Giá: </label>
+                <div class="col-sm-9">
+                    <input type="number" 
+                    formControlName="price" 
+                    nbInput fullWidth id="Price"
+                    placeholder="Price"
+                    [status]="getConfig('price') ? 'danger' : 'basic'">
+                    <span class="text-danger" *ngIf="getConfig('price')">
+                        <span *ngIf="form.get('price').errors?.required">Price is required</span>
+                        <span *ngIf="form.get('price').errors?.min">price is min at {{ form.get('price').errors.min.min }}</span>
+                        <span *ngIf="form.get('price').errors?.max">price is max at {{ form.get('price').errors.max.max }}</span>
+                    </span>
+                </div>
+            </div>
+        </form>
+    </nb-card-body>
+    <nb-card-footer class="button-row">
+      <button nbButton status="danger" (click)="cancel()">Cancel</button>
+      <button nbButton status="success" (click)="submit()" [disabled]="!form.valid">Submit</button>
+    </nb-card-footer>
+  </nb-card>

@@ -1,0 +1,116 @@
+<nb-card *ngIf="booking != undefined; else noBooking">
+    <nb-card-header>
+        <nb-actions size="small">
+            <nb-action>
+                Thông tin hóa đơn: #{{booking.id}}
+            </nb-action>
+            <nb-action
+                nbTooltip="Cập nhật thông tin" 
+                icon="edit-2-outline"
+                (click)="EditBooking()"></nb-action>
+
+            <nb-action
+                nbTooltip="Xác nhận thanh toán"
+                icon="credit-card-outline"
+                (click)="Checkout()"></nb-action>
+
+            <nb-action
+                nbTooltip="Xóa thông tin đặt tiệc"
+                icon="trash-2-outline"
+                (click)="CheckBooking('checkin')">Check in</nb-action>
+
+            <nb-action
+                nbTooltip="Hủy đặt tiệc"
+                icon="slash-outline"
+                (click)="CheckBooking('checkout')">Check out</nb-action>
+            <!-- <nb-action [icon]="disabledIconConfig" disabled></nb-action> -->
+          </nb-actions>
+    </nb-card-header>
+    <nb-card-body>
+        <nb-list>
+            <nb-list-item class="row">
+                <div class="col-6 col-md-3">
+                    <i class="fas fa-home"></i>
+                    Mã sảnh:
+                </div>
+                <div class="col-6 col-md-9">{{ booking.hallId }}</div>
+                <!-- <div class="col-6 col-md-3">
+                    Tên phòng:
+                </div>
+                <div class="col-6 col-md-3">{{ bill.room.name }}</div> -->
+            </nb-list-item>
+            <nb-list-item class="row">
+                <div class="col-6 col-md-3 col-sm-6">
+                    <i class="fas fa-user-circle"></i>
+                    Tên chú rể:
+                </div>
+                <div class="col-6 col-md-3 col-sm-6">{{ booking.groomName }}</div>
+                <div class="col-6 col-md-3 col-sm-6">
+                    <i class="fas fa-user-circle"></i>
+                    Tên cô dâu:
+                </div>
+                <div class="col-6 col-md-3 col-sm-6">{{ booking.brideName }}</div>
+            </nb-list-item>
+            <nb-list-item class="row">
+                <div class="col-6 col-md-3 col-sm-6">
+                    <i class="fas fa-calendar"></i>
+                    Ngày tổ chức:  
+                </div>
+                <div class="col-6 col-md-3 col-sm-6">{{ booking.date | date:'dd/MM/yyyy' }}</div>
+                <div class="col-6 col-md-3 col-sm-6">
+                    <i class="fas fa-calendar"></i>
+                    Ca:  
+                </div>
+                <div class="col-6 col-md-3 col-sm-6">{{ booking.shiftId }}</div>
+            </nb-list-item>
+
+            <nb-list-item class="row">
+                <div class="col-3 col-md-3">
+                    <i class="fas fa-money-bill-wave"></i>
+                    Tiền thuê:  
+                </div>
+                <div class="col-3 col-md-3">{{ booking.price }} VNĐ</div>
+                <div class="col-3 col-md-3">
+                    <i class="fas fa-money-bill-wave"></i>
+                    Đặt cọc:  
+                </div>
+                <div class="col-3 col-md-3">{{ booking.deposit }} VNĐ</div>
+            </nb-list-item>
+        </nb-list>
+    </nb-card-body>
+
+    <nb-card>
+        <nb-card-body>
+      
+          <nb-tabset fullWidth>
+            <nb-tab tabTitle="Menu">
+                <ng2-smart-table 
+                    [settings]="settingMN" 
+                    [source]="menu"
+                    (delete)="onDeleteFood($event)"
+                    (create)="onAddFood($event)"
+                    (edit)="onEditFood($event)"
+                    >
+                </ng2-smart-table>
+            </nb-tab>
+            <nb-tab tabTitle="Service">
+                <ng2-smart-table 
+                    [settings]="settingSV" 
+                    [source]="listSV"
+                    (delete)="onDeleteSV($event)"
+                    (create)="onAddSV($event)"
+                    (edit)="onEditSV($event)"
+                    >  
+                </ng2-smart-table>
+            </nb-tab>
+          </nb-tabset>
+      
+        </nb-card-body>
+      </nb-card>
+
+</nb-card>
+<ng-template #noBooking>
+    <nb-card status="danger">
+        <nb-card-header>Booking does not exist</nb-card-header>
+    </nb-card>
+</ng-template>

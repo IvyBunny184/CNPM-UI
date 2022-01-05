@@ -1,0 +1,118 @@
+<div class="row">
+    <div class="col-md-12">
+        <nb-card>
+            <nb-card-header>THÊM SẢNH</nb-card-header>
+            <nb-card-body>
+                <form novalidate [formGroup]="frmHall">
+                    <!-- ID -->
+                    <div class="form-group row">
+                        <label for="HallID" class="label col-sm-3 col-form-label">Mã sảnh: </label>
+                        <div class="col-sm-9">
+                            <input type="text" 
+                            formControlName="id" 
+                            nbInput fullWidth id="HallID"
+                            placeholder="Hall ID"
+                            [status]="getConfig('id') ? 'danger' : 'basic'">
+                            <span *ngIf="getConfig('id')" class="text-danger">
+                                <span *ngIf="frmHall.get('id').errors.required">ID is required</span>
+                                <span *ngIf="frmHall.get('id').errors?.minlength">
+                                    Hall ID at least {{ frmHall.get('id').errors?.minlength.requiredLength }} characters
+                                </span>
+                                <span *ngIf="frmHall.get('id').errors?.maxlength">
+                                    Hall ID at most {{ frmHall.get('id').errors?.maxlength.requiredLength }} characters
+                                </span>
+                                <span *ngIf="frmHall.get('id').errors?.pattern">
+                                    Hall ID is invalid
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- Name -->
+                    <div class="form-group row">
+                        <label for="name" class="label col-sm-3 col-form-label">Tên sảnh: </label>
+                        <div class="col-sm-9">
+                            <input type="text" 
+                            formControlName="name" 
+                            nbInput fullWidth id="name"
+                            placeholder="Hall name"
+                            [status]="getConfig('name') ? 'danger' : 'basic'">
+                            <span *ngIf="getConfig('name')" class="text-danger">
+                                <span *ngIf="frmHall.get('name').errors.required">Name is required</span>
+                                <span *ngIf="frmHall.get('name').errors?.minlength">
+                                    Hall name at least {{ frmHall.get('name').errors?.minlength.requiredLength }} characters
+                                </span>
+                                <span *ngIf="frmHall.get('name').errors?.maxlength">
+                                    Hall name at most {{ frmHall.get('name').errors?.maxlength.requiredLength }} characters
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Type -->
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label for="type" class="label col-sm-3 col-form-label">Loại sảnh: </label>
+                                <div class="col-sm-9">
+                                    <nb-select 
+                                        fullWidth
+                                        formControlName="typeId" 
+                                        placeholder="Hall type" 
+                                        shape="semi-round"
+                                        id="type"
+                                        [status]="getConfig('typeId') ? 'danger' : 'basic'">
+                                        <nb-option *ngFor="let item of listType" [value]="item.id">{{ item.name }} (ID: {{ item.id }})</nb-option>
+                                    </nb-select>
+                                    <span *ngIf="getConfig('typeId')"  class="text-danger">
+                                        <span *ngIf="frmHall.get('typeId').errors.required">Type is required</span>
+                                    </span>
+                                </div>
+                            </div>                            
+                        </div>
+                        <!-- Price -->
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label for="price" class="label col-sm-3 col-form-label">Giá thuê: </label>
+                                <div class="col-sm-9">
+                                    <input type="number" 
+                                        formControlName="price" 
+                                        nbInput fullWidth id="price"
+                                        placeholder="Price"
+                                        [status]="getConfig('price') ? 'danger' : 'basic'">
+                                        <span *ngIf="getConfig('price')"  class="text-danger">
+                                            <span *ngIf="frmHall.get('price').errors.required">Price is required</span>
+                                            <span *ngIf="frmHall.get('price').errors.min">Price is min at {{frmHall.get('price').errors.min.min}}</span>
+                                        </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="Describe" class="label col-sm-3 col-form-label">Mô tả: </label>
+                        <div class="col-sm-9">
+                            <ckeditor
+                            [config]="{ extraPlugins: 'divarea', height: '200' }"
+                            formControlName="describe"
+                            id="Describe"></ckeditor>
+                            <span *ngIf="getConfig('describe')"
+                                class="text-danger">
+                                <span *ngIf="form.get('describe').errors.required">Describe is required</span>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </nb-card-body>
+            <nb-card-footer>
+                <div class="row">
+                    <div class="col-md-4 col-12">
+                        <button nbButton fullWidth hero status="primary" (click)="addHall()" [disabled]="frmHall.invalid">THÊM MỚI</button>
+                    </div>
+                    <div class="offset-md-4 col-md-4 col-12">
+                        <button type="button" nbButton fullWidth hero status="danger" (click)="frmHall.reset()">NHẬP LẠI</button>
+                    </div>
+                </div>
+            </nb-card-footer>
+        </nb-card>
+    </div>
+</div>

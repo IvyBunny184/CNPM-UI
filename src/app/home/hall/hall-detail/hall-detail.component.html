@@ -1,0 +1,64 @@
+<nb-card status="success" *ngIf="hall != undefined; else noHall">
+    <nb-card-header>Thông tin sảnh: {{hall.id}}</nb-card-header>
+    <nb-card-body>
+        <nb-list>
+            <nb-list-item>
+                <div class="col-4">
+                    <i class="fas fa-home"></i>
+                    Tên sảnh:
+                </div>
+                <div class="col-6">{{ hall.name }}</div>
+            </nb-list-item>
+            <nb-list-item>
+                <div class="col-4">
+                    <i class="fas fa-inbox"></i>
+                    Loại sảnh: 
+                </div>
+                <div class="col-6">{{ hall.typeId }}</div>
+            </nb-list-item>
+            <nb-list-item>
+                <div class="col-4">
+                    <i class="fas fa-user"></i>
+                    Số bàn tối đa:  
+                </div>
+                <div class="col-6">{{ hall.maxTables }}</div>
+            </nb-list-item>
+            <nb-list-item>
+                <div class="col-4">
+                    <i class="fas fa-child"></i>
+                    Giá thuê:  
+                </div>
+                <div class="col-6">{{ hall.price }}</div>
+            </nb-list-item>
+            <nb-list-item>
+                <div class="col-4">
+                    <i class="fas fa-info-circle"></i>
+                    Mô tả:  
+                </div>
+                <div class="col-6">{{ hall.describe }}</div>
+            </nb-list-item>
+        </nb-list>
+        
+    </nb-card-body>
+    <nb-card-footer>
+        <div class="row">
+            <div class="col-md-4 col-12">
+                <button hero fullWidth nbButton shape="semi-round" status="info" (click)="onUpdate()"><i
+                        class="fas fa-edit"></i>&emsp;Cập nhật thông tin </button>
+            </div>
+            <div class="col-md-4 col-12">
+                <button hero fullWidth nbButton shape="semi-round" status="info" (click)="editImg()"><i
+                        class="fas fa-image"></i>&emsp;Cập nhật ảnh </button>
+            </div>
+            <div class="col-md-4 col-12">
+                <button hero fullWidth nbButton shape="semi-round" status="danger" (click)="onRemove()"><i
+                        class="fas fa-minus-circle"></i>&emsp;Xóa sảnh </button>
+            </div>
+        </div>
+    </nb-card-footer>
+</nb-card>
+<ng-template #noHall>
+    <nb-card status="danger">
+        <nb-card-header>Hall does not exist</nb-card-header>
+    </nb-card>
+</ng-template>

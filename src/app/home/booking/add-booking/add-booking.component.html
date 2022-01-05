@@ -1,0 +1,159 @@
+<div class="row">
+    <div class="col-md-12">
+        <nb-card>
+            <nb-card-header *ngIf="isAdd">
+                TẠO HÓA ĐƠN ĐẶT TIỆC
+            </nb-card-header>
+            <nb-card-header *ngIf="!isAdd">
+                CẬP NHẬT HÓA ĐƠN #{{ booking.id }}
+            </nb-card-header>
+            <nb-card-body>
+                <form [formGroup]="form">
+                    <!-- Select Hall -->
+                    <div class="form-group row">
+                        <label for="Hall" class="label col-sm-3 col-form-label">Sảnh: </label>
+                        <div class="col-sm-9">
+                            <nb-select 
+                                fullWidth
+                                formControlName="hallId" 
+                                placeholder="Select hall" 
+                                shape="semi-round"
+                                id="Hall"
+                                [status]="getConfig('hallId') ? 'danger' : 'basic'">
+                                <nb-option *ngFor="let item of halls" [value]="item.id">{{ item.name }} (ID: {{ item.id }})</nb-option>
+                            </nb-select>
+                            <span *ngIf="getConfig('hallId')" class="text-danger">
+                                Hall is required
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Date -->
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label for="date" class="label col-sm-3 col-form-label">Ngày tổ chức: </label>
+                                <div class="col-sm-9" id="Date">
+                                    <input 
+                                    formControlName="date" 
+                                    nbInput fullWidth 
+                                    placeholder="Check in Date"
+                                    [nbDatepicker]="date"
+                                    [status]="getConfig('date') ? 'danger' : 'basic'">
+                                <nb-datepicker #date></nb-datepicker>
+                                <span *ngIf="getConfig('date')" class="text-danger">
+                                    <span *ngIf="form.get('date').errors.required">Date is required</span>
+                                </span>
+                                </div>
+                            </div>                            
+                        </div>
+                        <!-- Shift -->
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label for="shift" class="label col-sm-3 col-form-label">Ca: </label>
+                                <div class="col-sm-9">
+                                    <nb-select 
+                                        fullWidth
+                                        formControlName="shiftId" 
+                                        placeholder="Select shift" 
+                                        shape="semi-round"
+                                        id="shift"
+                                        [status]="getConfig('shiftId') ? 'danger' : 'basic'">
+                                    <nb-option *ngFor="let item of shifts" [value]="item.id">{{ item.name }} (ID: {{ item.id }})</nb-option>
+                                    </nb-select>
+                                    <span *ngIf="getConfig('shiftId')" class="text-danger">
+                                        Shift is required
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label for="Groom" class="label col-sm-3 col-form-label">Tên chú rể: </label>
+                                <div class="col-sm-9">
+                                    <input type="text" 
+                                    formControlName="groomName" 
+                                    nbInput fullWidth id="Groom"
+                                    placeholder="Groom Name"
+                                    [status]="getConfig('groomName') ? 'danger' : 'basic'">
+                                    <span *ngIf="getConfig('groomName')" class="text-danger">
+                                        <span *ngIf="form.get('groomName').errors.required">Groom name is required</span>
+                                        <span *ngIf="form.get('groomName').errors.min">Groom name is min at {{form.get('groomName').errors.min.min}}</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label for="Bride" class="label col-sm-3 col-form-label">Tên cô dâu: </label>
+                                <div class="col-sm-9">
+                                    <input type="text" 
+                                    formControlName="brideName" 
+                                    nbInput fullWidth id="Bride"
+                                    placeholder="Bride Name"
+                                    [status]="getConfig('brideName') ? 'danger' : 'basic'">
+                                    <span *ngIf="getConfig('brideName')" class="text-danger">
+                                        <span *ngIf="form.get('brideName').errors.required">Bride name is required</span>
+                                        <span *ngIf="form.get('brideName').errors.min">Bride name is min at {{form.get('brideName').errors.min.min}}</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label for="Price" class="label col-sm-3 col-form-label">Tiền thuê: </label>
+                                <div class="col-sm-9">
+                                    <input type="number" 
+                                    formControlName="price" 
+                                    nbInput fullWidth id="Price"
+                                    placeholder="price"
+                                    [status]="getConfig('price') ? 'danger' : 'basic'">
+                                    <span *ngIf="getConfig('price')" class="text-danger">
+                                        <span *ngIf="form.get('price').errors.required">Price is required</span>
+                                        <span *ngIf="form.get('price').errors.min">Price is min at {{form.get('price').errors.min}}</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label for="Deposit" class="label col-sm-3 col-form-label">Tiền cọc: </label>
+                                <div class="col-sm-9">
+                                    <input type="number" 
+                                    formControlName="deposit" 
+                                    nbInput fullWidth id="Deposit"
+                                    placeholder="deposit"
+                                    [status]="getConfig('deposit') ? 'danger' : 'basic'">
+                                    <span *ngIf="getConfig('deposit')" class="text-danger">
+                                        <span *ngIf="form.get('deposit').errors.required">Deposit is required</span>
+                                        <span *ngIf="form.get('deposit').errors.min">Deposit is min at {{form.get('deposit').errors.min}}</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </nb-card-body>
+            <nb-card-footer>
+                <div class="row">
+                    <div class="col-md-4 col-12">
+                        <button nbButton fullWidth hero status="primary" (click)="submitForm()">XÁC NHẬN</button>
+                    </div>
+                    <div class="offset-md-4 col-md-4 col-12">
+                        <button type="button" nbButton fullWidth hero status="danger" (click)="resetFrm()">NHẬP LẠI</button>
+                    </div>
+                </div>
+            </nb-card-footer>
+        </nb-card>
+    </div>
+</div>

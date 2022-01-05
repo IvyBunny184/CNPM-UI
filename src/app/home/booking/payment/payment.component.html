@@ -1,0 +1,15 @@
+<nb-card accent="primary">
+    <nb-card-header>
+        DANH SÁCH PHƯƠNG THỨC THANH TOÁN
+    </nb-card-header>
+
+    <nb-card-body>
+        <ng2-smart-table 
+            [settings]="settings" 
+            [source]="source"
+            (create)="onCreate($event)"
+            (edit)="onEdit($event)"
+            (delete)="onRemove($event)">
+        </ng2-smart-table>
+    </nb-card-body>
+</nb-card>

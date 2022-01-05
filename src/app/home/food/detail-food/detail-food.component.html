@@ -1,0 +1,49 @@
+<nb-card status="success" *ngIf="food$ | async as food; else noFood">
+    <nb-card-header>Thông tin món ăn: {{ food.id }}</nb-card-header>
+    <nb-card-body>
+        <nb-list>
+            <nb-list-item>
+                <div class="col-4">
+                    <i class="fas fa-concierge-bell"></i>
+                    Tên dịch vụ:
+                </div>
+                <div class="col-8">
+                    {{ food.name }}
+                </div>
+            </nb-list-item>
+            <nb-list-item>
+                <div class="col-4">
+                    <i class="fas fa-dollar-sign"></i>
+                    Giá dịch vụ:
+                </div>
+                <div class="col-8">
+                    {{ food.price }} $
+                </div>
+            </nb-list-item>
+            <nb-list-item>
+                Mô tả dịch vụ: 
+            </nb-list-item>
+            <nb-list-item>
+                <!-- <div  [innerHTML]="food.describe | innerHtmlPipe"></div> -->
+                <span>{{ food.describe }}</span>
+            </nb-list-item>
+        </nb-list>
+    </nb-card-body>
+    <nb-card-footer *ngIf="canEdit">
+        <div class="row">
+            <div class="col-md-4 col-12">
+                <button hero fullWidth nbButton shape="semi-round" status="info" (click)="onUpdate(food.id)"><i
+                        class="fas fa-edit"></i>&emsp;Cập nhật món ăn</button>
+            </div>
+            <div class="offset-md-4 col-md-4 col-12">
+                <button hero fullWidth nbButton shape="semi-round" status="danger" (click)="onRemove(food.id)"><i
+                        class="fas fa-minus-circle"></i>&emsp;Xóa món ăn</button>
+            </div>
+        </div>
+    </nb-card-footer>
+</nb-card>
+<ng-template #noFood>
+    <nb-card status="danger">
+        <nb-card-header>Service does not exist</nb-card-header>
+    </nb-card>
+</ng-template>
